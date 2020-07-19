@@ -11,7 +11,7 @@ export default class CourseClasses extends BaseSchema {
       table.string('description', 255).nullable()
       table.integer('order').unsigned().notNullable().comment('Order on classes')
       table.boolean('is_public').defaultTo(false).notNullable() // If the class is ready to be publicly visible
-      table.integer('course_id').unsigned().references('id').inTable('courses').onDelete('CASCADE')
+      table.integer('course_id').notNullable().unsigned().references('id').inTable('courses').onDelete('CASCADE')
       table.timestamps(true)
 
       table.index('order')
