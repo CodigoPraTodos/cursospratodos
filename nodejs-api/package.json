@@ -6,7 +6,10 @@
     "build": "node ace build",
     "start": "node ace serve --watch",
     "lint": "eslint . --ext=.ts",
-    "migrate": "node ace migration:rollback && node ace migration:run"
+    "seed": "node ace db:seed --files=Role,User,UserRole,Instructor,Course",
+    "migrate:run": "node ace migration:run",
+    "migrate:rollback": "node ace migration:rollback",
+    "migrate:full": "yarn migrate:rollback && yarn migrate:run"
   },
   "devDependencies": {
     "@adonisjs/assembler": "^2.0.0",

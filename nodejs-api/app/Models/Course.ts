@@ -1,7 +1,7 @@
 import { DateTime } from 'luxon'
 import { BaseModel, column, HasMany, hasMany, belongsTo, BelongsTo } from '@ioc:Adonis/Lucid/Orm'
 
-import { CourseStatus } from 'helpers/CourseStatus'
+import { CourseStatus } from 'App/Helpers/CourseStatus'
 
 import User from './User'
 import CourseRate from './CourseRate'
