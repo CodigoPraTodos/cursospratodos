@@ -25,6 +25,9 @@ cp .env.example .env && vi .env # pode usar seu editor preferido
 # Instale as dependências com yarn (por conta do yarn.lock)
 yarn
 
+# Inicia o banco de dados com Docker para executar migrações e seed
+docker-compose up
+
 # Rode os scripts de migração para criar o banco de dados local
 # Lembre de ter o banco de dados criado e configurado (.env)
 yarn migrate:run
@@ -51,6 +54,9 @@ yarn seed
 ## Rodando em desenvolvimento
 
 ```bash
+# Inicia o banco de dados com Docker
+docker-compose up
+
 # Inicia o servidor e escuta alterações nos arquivos locais (faz rebuild automaticamente)
 yarn start
 
