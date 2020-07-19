@@ -5,10 +5,12 @@
   "scripts": {
     "build": "node ace build",
     "start": "node ace serve --watch",
-    "lint": "eslint . --ext=.ts"
+    "lint": "eslint . --ext=.ts",
+    "migrate": "node ace migration:rollback && node ace migration:run"
   },
   "devDependencies": {
     "@adonisjs/assembler": "^2.0.0",
+    "@types/uuid": "^8.0.0",
     "adonis-preset-ts": "^1.0.4",
     "eslint": "^7.5.0",
     "eslint-plugin-adonis": "^1.0.14",
@@ -19,10 +21,14 @@
   },
   "dependencies": {
     "@adonisjs/ace": "^6.0.0",
+    "@adonisjs/auth": "^4.2.4",
     "@adonisjs/core": "^5.0.0-preview-rc",
     "@adonisjs/fold": "^6.0.0",
+    "@adonisjs/lucid": "^8.2.2",
+    "pg": "^8.3.0",
     "proxy-addr": "^2.0.6",
     "reflect-metadata": "^0.1.13",
-    "source-map-support": "^0.5.19"
+    "source-map-support": "^0.5.19",
+    "uuid": "^8.2.0"
   }
 }
