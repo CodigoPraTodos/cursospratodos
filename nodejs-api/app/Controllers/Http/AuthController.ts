@@ -2,24 +2,7 @@ import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import { rules, schema } from '@ioc:Adonis/Core/Validator'
 
 import User from 'App/Models/User'
-
-const schemaAuth = (isSignUp: boolean = false) => {
-  const emailRules = [rules.email()]
-
-  const authSchema: any = {
-    email: schema.string({ trim: true, escape: true }, emailRules),
-    password: schema.string({}, [rules.minLength(6)]),
-  }
-
-  if (isSignUp) {
-    emailRules.push(rules.unique({ table: 'users', column: 'email' }))
-    authSchema.name = schema.string({ trim: true, escape: true }, [rules.maxLength(150)])
-  }
-
-  return schema.create(authSchema)
-}
-
-const EXPIRES_IN = '14 days'
+import UtilsService from 'App/Services/UtilsService'
 
 export default class AuthController {
   public async register({ request, response, auth }: HttpContextContract) {
@@ -39,12 +22,13 @@ export default class AuthController {
     const user = await User.query()
       .where('email', email)
       .andWhere('is_active', true)
+      .preload('instructor')
       .first()
 
     if (!user) {
-      return response.badRequest({
-        errors: [{ message: 'Invalid user credentials' }],
-      })
+      return response.badRequest(
+        UtilsService.formatMessages('Invalid user credentials')
+      )
     }
 
     const token = await auth.use('api').attempt(email, password, {
@@ -59,6 +43,7 @@ export default class AuthController {
     }
 
     const { user } = auth // extract user to re-login
+    await user.preload('instructor')
     await auth.use('api').logout() // remove last access token
 
     const token = await auth.use('api').login(user, {
@@ -79,3 +64,23 @@ export default class AuthController {
     }
   }
 }
+
+const schemaAuth = (isSignUp: boolean = false) => {
+  const emailRules = [rules.email()]
+
+  const authSchema: any = {
+    email: schema.string({ trim: true, escape: true }, emailRules),
+    password: schema.string({}, [rules.minLength(6)]),
+  }
+
+  if (isSignUp) {
+    emailRules.push(rules.unique({ table: 'users', column: 'email' }))
+    authSchema.name = schema.string({ trim: true, escape: true }, [
+      rules.maxLength(150),
+    ])
+  }
+
+  return schema.create(authSchema)
+}
+
+const EXPIRES_IN = '14 days'

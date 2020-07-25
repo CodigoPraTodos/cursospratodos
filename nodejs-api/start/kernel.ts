@@ -41,5 +41,10 @@ Server.middleware.register([
 |
 */
 Server.middleware.registerNamed({
+  // Routes should have a logged user
   auth: 'App/Middleware/Auth',
+  // Routes may have a logged user, but is not strict
+  silentAuth: 'App/Middleware/SilentAuth',
+  // Routes should have a logged user that's an instructor
+  instructorAuth: 'App/Middleware/InstructorAuth',
 })
