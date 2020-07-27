@@ -69,13 +69,13 @@ const schemaAuth = (isSignUp: boolean = false) => {
   const emailRules = [rules.email()]
 
   const authSchema: any = {
-    email: schema.string({ trim: true, escape: true }, emailRules),
+    email: schema.string({ trim: true }, emailRules),
     password: schema.string({}, [rules.minLength(6)]),
   }
 
   if (isSignUp) {
     emailRules.push(rules.unique({ table: 'users', column: 'email' }))
-    authSchema.name = schema.string({ trim: true, escape: true }, [
+    authSchema.name = schema.string({ trim: true }, [
       rules.maxLength(150),
     ])
   }
