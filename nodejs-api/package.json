@@ -9,7 +9,8 @@
     "seed": "node ace db:seed --files=Role,User,UserRole,Instructor,Course",
     "migrate:run": "node ace migration:run",
     "migrate:rollback": "node ace migration:rollback",
-    "migrate:full": "yarn migrate:rollback && yarn migrate:run"
+    "migrate:full": "yarn migrate:rollback && yarn migrate:run",
+    "test": "node build/japaFile.js"
   },
   "devDependencies": {
     "@adonisjs/assembler": "^2.0.0",
