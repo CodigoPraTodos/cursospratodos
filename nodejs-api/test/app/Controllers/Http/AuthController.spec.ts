@@ -1,5 +1,7 @@
 import test from 'japa'
 import supertest from 'supertest'
+import faker from 'faker'
+
 import User from 'App/Models/User'
 
 const BASE_URL = `http://${process.env.HOST}:${process.env.PORT}/auth`
@@ -10,9 +12,9 @@ test.group('AuthController', () => {
       const response = await supertest(BASE_URL)
         .post('/register')
         .send({
-          name: 'Test',
-          email: 'test@test.com',
-          password: '123456',
+          name: faker.name.findName(),
+          email: faker.internet.email(),
+          password: faker.internet.password(),
         })
         .expect(201)
       assert.isDefined(response.body.auth.token)
@@ -22,8 +24,8 @@ test.group('AuthController', () => {
 
     test('POST /login', async (assert) => {
       const user = await User.create({
-        name: 'testename',
-        email: 'teste@email.com',
+        name: faker.name.findName(),
+        email: faker.internet.email(),
         password: 'secret',
       })
 
