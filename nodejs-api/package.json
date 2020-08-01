@@ -13,11 +13,16 @@
   },
   "devDependencies": {
     "@adonisjs/assembler": "^2.0.0",
+    "@types/supertest": "^2.0.10",
     "@types/uuid": "^8.0.0",
     "adonis-preset-ts": "^1.0.4",
     "eslint": "^7.5.0",
     "eslint-plugin-adonis": "^1.0.14",
+    "execa": "^4.0.3",
+    "get-port": "^5.1.1",
+    "japa": "^3.1.1",
     "pino-pretty": "^4.0.3",
+    "supertest": "^4.0.2",
     "typescript": "^3.9.7",
     "youch": "^2.0.10",
     "youch-terminal": "^1.0.0"
