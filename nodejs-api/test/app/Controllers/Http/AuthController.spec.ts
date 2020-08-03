@@ -98,5 +98,14 @@ test.group('AuthController', () => {
         assert.isNotEmpty(response.body.errors)
       })
     })
+
+    test.group('GET /logout', async() => {
+      test('with invalid token', async() => {
+        await supertest(BASE_URL)
+        .get('/logout')
+        .set('Authorization', '')
+        .expect(401)
+      })
+    })
   })
 })
