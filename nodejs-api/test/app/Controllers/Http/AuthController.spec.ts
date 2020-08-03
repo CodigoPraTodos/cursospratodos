@@ -10,7 +10,7 @@ test.group('AuthController', () => {
   test.group('/auth', (group) => {
     group.beforeEach(async () => {
       const users = await User.all()
-      users.map((user) => user.delete())
+      users.forEach( async (user) => await user.delete())
     })
 
     test('POST /register with valid data', async (assert) => {
@@ -23,7 +23,7 @@ test.group('AuthController', () => {
         })
         .expect(201)
       assert.isDefined(response.body.auth.token)
-      assert.equal(response.body.user.id, 1)
+      assert.equal(response.body.user.id, 1)  
       assert.notExists(response.body.user.password)
     })
 
