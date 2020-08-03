@@ -10,39 +10,43 @@ test.group('AuthController', () => {
   test.group('/auth', (group) => {
     group.beforeEach(async () => {
       const users = await User.all()
-      users.forEach( async (user) => await user.delete())
+      users.forEach(async (user) => await user.delete())
     })
 
-    test('POST /register with valid data', async (assert) => {
-      const response = await supertest(BASE_URL)
-        .post('/register')
-        .send({
+    test.group('POST /register', () => {
+      test('with valid data', async (assert) => {
+        const response = await supertest(BASE_URL)
+          .post('/register')
+          .send({
+            name: faker.name.findName(),
+            email: faker.internet.email(),
+            password: faker.internet.password(),
+          })
+          .expect(201)
+        assert.isDefined(response.body.auth.token)
+        assert.equal(response.body.user.id, 1)
+        assert.notExists(response.body.user.password)
+      })
+    })
+
+    test.group('POST /login', async() => {
+      test('with valid data', async (assert) => {
+        const user = await User.create({
           name: faker.name.findName(),
           email: faker.internet.email(),
-          password: faker.internet.password(),
-        })
-        .expect(201)
-      assert.isDefined(response.body.auth.token)
-      assert.equal(response.body.user.id, 1)  
-      assert.notExists(response.body.user.password)
-    })
-
-    test('POST /login with valid data', async (assert) => {
-      const user = await User.create({
-        name: faker.name.findName(),
-        email: faker.internet.email(),
-        password: 'secret',
-      })
-
-      const response = await supertest(BASE_URL)
-        .post('/login')
-        .send({
-          email: user.$attributes.email,
           password: 'secret',
         })
-        .expect(200)
-      assert.isDefined(response.body.auth.token)
-      assert.equal(response.body.user.is_active, true)
+
+        const response = await supertest(BASE_URL)
+          .post('/login')
+          .send({
+            email: user.email,
+            password: 'secret',
+          })
+          .expect(200)
+        assert.isDefined(response.body.auth.token)
+        assert.equal(response.body.user.is_active, true)
+      })
     })
   })
 })
