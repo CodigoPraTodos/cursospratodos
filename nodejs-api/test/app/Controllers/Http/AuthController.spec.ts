@@ -27,6 +27,19 @@ test.group('AuthController', () => {
         assert.equal(response.body.user.id, 1)
         assert.notExists(response.body.user.password)
       })
+
+      test('lacking data', async (assert) => {
+
+        const response = await supertest(BASE_URL)
+          .post('/register')
+          .send({
+            password: 'Secret'
+          })
+          .expect(422)
+
+        assert.isArray(response.body.errors)
+        assert.isNotEmpty(response.body.errors)
+      })
     })
 
     test.group('POST /login', async() => {
