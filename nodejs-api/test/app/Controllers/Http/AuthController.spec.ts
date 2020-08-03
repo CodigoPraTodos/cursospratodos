@@ -29,11 +29,10 @@ test.group('AuthController', () => {
       })
 
       test('lacking data', async (assert) => {
-
         const response = await supertest(BASE_URL)
           .post('/register')
           .send({
-            password: 'Secret'
+            password: 'Secret',
           })
           .expect(422)
 
@@ -59,6 +58,17 @@ test.group('AuthController', () => {
           .expect(200)
         assert.isDefined(response.body.auth.token)
         assert.equal(response.body.user.is_active, true)
+      })
+
+      test('with invalid credentials', async (assert) => {
+        const response = await supertest(BASE_URL)
+          .post('/login')
+          .send({
+            email: 'invalid@email.com',
+            password: 'invalid_password',
+          })
+          .expect(400)
+        assert.equal(response.body.errors[0].message, 'Invalid user credentials')
       })
     })
   })
