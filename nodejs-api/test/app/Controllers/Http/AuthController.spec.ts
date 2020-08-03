@@ -39,10 +39,25 @@ test.group('AuthController', () => {
         assert.isArray(response.body.errors)
         assert.isNotEmpty(response.body.errors)
       })
+
+      test('with invalid email', async (assert) => {
+        const response = await supertest(BASE_URL)
+          .post('/register')
+          .send({
+            name: faker.name.findName(),
+            email: 'invalid_email',
+            password: faker.internet.password(),
+          })
+          .expect(422)
+
+        assert.isArray(response.body.errors)
+        assert.isNotEmpty(response.body.errors)
+        assert.equal(response.body.errors[0].message, 'email validation failed')
+      })
     })
 
     test.group('POST /login', async() => {
-      test('with valid data', async (assert) => {
+      test('with valid credentials', async (assert) => {
         const user = await User.create({
           name: faker.name.findName(),
           email: faker.internet.email(),
@@ -69,6 +84,18 @@ test.group('AuthController', () => {
           })
           .expect(400)
         assert.equal(response.body.errors[0].message, 'Invalid user credentials')
+      })
+
+      test('lacking data', async (assert) => {
+        const response = await supertest(BASE_URL)
+          .post('/login')
+          .send({
+            email: 'invalid@email.com',
+          })
+          .expect(422)
+        assert.equal(response.body.errors[0].message, 'required validation failed')
+        assert.isArray(response.body.errors)
+        assert.isNotEmpty(response.body.errors)
       })
     })
   })
