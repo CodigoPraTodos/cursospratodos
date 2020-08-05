@@ -63,5 +63,26 @@ test.group('AuthController', () => {
     test('GET /logout with invalid token', async (assert) => {
       await supertest(BASE_URL).get('/logout').set({ Authorization: 'token' }).expect(401)
     })
+
+    test('GET /renew-token with invalid token', async (assert) => {
+      await supertest(BASE_URL).get('/renew-token').set({ Authorization: 'token' }).expect(401)
+    })
+    test('GET /renew-token with valid token', async (assert) => {
+      const user = await User.create({
+        name: faker.name.findName(),
+        email: faker.internet.email(),
+        password: 'secret',
+      })
+
+      const loginResponse = await supertest(BASE_URL).post('/login').send({ email: user.email, password: 'secret' })
+
+      const response = await supertest(BASE_URL)
+        .get('/renew-token')
+        .set({ Authorization: `${loginResponse.body.auth.type} ${loginResponse.body.auth.token}` })
+        .expect(200)
+
+      assert.isObject(response)
+      assert.notEqual(loginResponse.body.auth.token, response.body.auth.token)
+    })
   })
 })
