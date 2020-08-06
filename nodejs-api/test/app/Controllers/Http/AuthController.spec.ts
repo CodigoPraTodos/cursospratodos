@@ -10,7 +10,7 @@ test.group('AuthController', () => {
   test.group('/auth', (group) => {
     group.beforeEach(async () => {
       const users = await User.all()
-      users.forEach(async (user) => await user.delete())
+      await Promise.all(users.map((user) => user.delete()))
     })
 
     test.group('POST /register', () => {
