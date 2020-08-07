@@ -68,4 +68,10 @@ Se você possuir o aplicativo Insomnia, poderá usar o arquivo [Insomnia.json](I
 
 ## Executando testes
 
-Em desenvolvimento
+Siga os passos do `Rodando em desenvolvimento` em um terminal aberto
+
+Abra outro terminal e nele execute o comando:
+
+```bash
+yarn test
+```
