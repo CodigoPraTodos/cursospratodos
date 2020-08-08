@@ -8,3 +8,15 @@ services:
       - POSTGRES_DB=cursos_pra_todos
     ports:
       - '5432:5432'
+  cspt:
+    build: .
+    depends_on:
+      - postgresql
+    environment:
+      - DB_HOST=postgres
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres
+      - DB_NAME=cursos_pra_todos
+      - DB_PORT=5432
+    ports:
+      - '4333:3333'

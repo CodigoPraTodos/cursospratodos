@@ -35,8 +35,9 @@ COPY tsconfig.json ./
 
 # Building app
 RUN yarn build
+COPY .env.example ./build/.env
 
 EXPOSE 3333
 
 # Running the app
-CMD yarn start
+CMD node build/server
