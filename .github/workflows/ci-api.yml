@@ -50,7 +50,8 @@ jobs:
         uses: actions/upload-artifact@v1
         with:
           name: tests-coverage
-          path: .coverage
+          path: nodejs-api/.coverage
+      
       # - name: 🐳 Build, tag, and push image to Amazon ECR
       #   env:
       #     ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
