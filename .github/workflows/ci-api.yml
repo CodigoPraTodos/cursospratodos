@@ -47,10 +47,10 @@ jobs:
           yarn coverage
 
       - name: 👩‍🔬 Upload Tests Reports
-        uses: actions/upload-artifact@v1
+        uses: codecov/codecov-action@v1
         with:
-          name: tests-coverage
-          path: nodejs-api/.coverage
+          file: ./.coverage/lcov.info
+          fail_ci_if_error: true
 
       - name: 🐳 Build and push Docker images
         uses: docker/build-push-action@v1
