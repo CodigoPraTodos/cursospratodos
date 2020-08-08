@@ -10,10 +10,12 @@
     "migrate:run": "node ace migration:run",
     "migrate:rollback": "node ace migration:rollback",
     "migrate:full": "yarn migrate:rollback && yarn migrate:run",
-    "test": "node build/japaFile.js"
+    "test": "node build/japaFile.js",
+    "coverage": "nyc yarn test"
   },
   "devDependencies": {
     "@adonisjs/assembler": "^2.0.0",
+    "@istanbuljs/nyc-config-typescript": "^1.0.1",
     "@types/faker": "^4.1.12",
     "@types/supertest": "^2.0.10",
     "@types/uuid": "^8.0.0",
@@ -24,8 +26,10 @@
     "faker": "^4.1.0",
     "get-port": "^5.1.1",
     "japa": "^3.1.1",
+    "nyc": "^15.1.0",
     "pino-pretty": "^4.0.3",
     "supertest": "^4.0.2",
+    "ts-node": "^8.10.2",
     "typescript": "^3.9.7",
     "youch": "^2.0.10",
     "youch-terminal": "^1.0.0"

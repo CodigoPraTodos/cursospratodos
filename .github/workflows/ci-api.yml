@@ -1,0 +1,64 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - "nodejs-api/**"
+  pull_request:
+    branches: [master]
+    paths:
+      - "nodejs-api/**"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    defaults:
+      run:
+        working-directory: nodejs-api
+    strategy:
+      matrix:
+        node-version: [12.x]
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: ➡️ Setup Node ${{ matrix.node-version }}
+        uses: actions/setup-node@v1.4.2
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: 📦 Install Node Dependencies
+        run: yarn
+
+      - name: 💅 Lint
+        run: yarn lint
+
+      - name: 🛠 Build
+        run: yarn build
+
+      - name: 🧪 Run Tests
+        timeout-minutes: 10
+        run: |
+          cp .env.example build/.env
+          docker run --rm -p 5432:5432 -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=cursos_pra_todos postgres:12.3 -c fsync=off
+          sleep 10 # db start tolerance time -- todo: improve with a wait step check?
+          yarn coverage
+
+      - name: 👩‍🔬 Upload Tests Reports
+        uses: actions/upload-artifact@v1
+        with:
+          name: tests-coverage
+          path: .coverage
+
+      # - name: 🐳 Build, tag, and push image to Amazon ECR
+      #   env:
+      #     ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+      #     ECR_REPOSITORY: codigopratodos/cspt-node-api
+      #     IMAGE_TAG: ${{ github.sha }}
+      #     GH_REF: ${{ github.ref }}
+      #     IMAGE_PREFIX: ${{ github.ref == 'refs/heads/master' && 'dev' || 'branch' }}
+      #   run: |
+      #     docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_PREFIX-$IMAGE_TAG .
+      #     docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_PREFIX-$IMAGE_TAG
