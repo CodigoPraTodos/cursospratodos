@@ -69,5 +69,5 @@ jobs:
           username: codigopratodos
           password: ${{ secrets.DOCKERHUB_TOKEN }}
           snapshot: true
-          wordir: nodejs-api
+          workdir: nodejs-api
           dockerfile: Dockerfile
