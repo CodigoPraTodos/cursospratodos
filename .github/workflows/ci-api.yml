@@ -52,22 +52,12 @@ jobs:
           name: tests-coverage
           path: nodejs-api/.coverage
 
-      # - name: 🐳 Build and push Docker images
-      #   uses: docker/build-push-action@v1
-      #   with:
-      #     username: codigopratodos
-      #     password: ${{ secrets.DOCKERHUB_TOKEN }}
-      #     repository: codigopratodos/cspt-nodejs-api
-      #     tag_with_ref: true
-      #     tag_with_sha: true
-      #     path: nodejs-api
-
       - name: 🐳 Build and push Docker images
-        uses: elgohr/Publish-Docker-Github-Action@master
+        uses: docker/build-push-action@v1
         with:
-          name: codigopratodos/cspt-nodejs-api
           username: codigopratodos
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-          snapshot: true
-          workdir: nodejs-api
-          dockerfile: Dockerfile
+          repository: codigopratodos/cspt-nodejs-api
+          tag_with_ref: true
+          tag_with_sha: true
+          path: nodejs-api

@@ -20,13 +20,21 @@ ENV DB_NAME=cursos_pra_todos
 
 # Copying source files
 COPY database ./database
+RUN true
 COPY app ./app
+RUN true
 COPY commands ./commands
+RUN true
 COPY config ./config
+RUN true
 COPY contracts ./contracts
+RUN true
 COPY database ./database
+RUN true
 COPY providers ./providers
+RUN true
 COPY start ./start
+RUN true
 COPY .adonisrc.json ./
 COPY .env.example ./
 COPY ace ./
