@@ -42,7 +42,7 @@ jobs:
         timeout-minutes: 10
         run: |
           cp .env.example build/.env
-          docker run --rm -p 5432:5432 -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=cursos_pra_todos postgres:12.3 -c fsync=off
+          docker run --rm -p 5432:5432 -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=cursos_pra_todos -d postgres:12.3 -c fsync=off
           sleep 10 # db start tolerance time -- todo: improve with a wait step check?
           yarn coverage
 
@@ -51,7 +51,6 @@ jobs:
         with:
           name: tests-coverage
           path: .coverage
-
       # - name: 🐳 Build, tag, and push image to Amazon ECR
       #   env:
       #     ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
