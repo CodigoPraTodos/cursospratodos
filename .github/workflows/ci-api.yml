@@ -50,6 +50,7 @@ jobs:
         uses: codecov/codecov-action@v1
         with:
           fail_ci_if_error: true
+          directory: nodejs-api
 
       - name: 🐳 Build and push Docker images
         uses: docker/build-push-action@v1
