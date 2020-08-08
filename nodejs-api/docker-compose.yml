@@ -1,10 +1,23 @@
-version: "3"
+version: '3'
 services:
   postgresql:
-    image: "postgres"
+    image: 'postgres:12.3'
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=cursos_pra_todos
     ports:
-      - "5432:5432"
+      - '5432:5432'
+  # testando o cursopratodos em "produção"
+  # cspt:
+  #   build: .
+  #   depends_on:
+  #     - postgresql
+  #   environment:
+  #     - DB_HOST=postgres
+  #     - DB_USER=postgres
+  #     - DB_PASSWORD=postgres
+  #     - DB_NAME=cursos_pra_todos
+  #     - DB_PORT=5432
+  #   ports:
+  #     - '4333:3333'

@@ -1,0 +1,63 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - "nodejs-api/**"
+  pull_request:
+    branches: [master]
+    paths:
+      - "nodejs-api/**"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    defaults:
+      run:
+        working-directory: nodejs-api
+    strategy:
+      matrix:
+        node-version: [12.x]
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: ➡️ Setup Node ${{ matrix.node-version }}
+        uses: actions/setup-node@v1.4.2
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: 📦 Install Node Dependencies
+        run: yarn
+
+      - name: 💅 Lint
+        run: yarn lint
+
+      - name: 🛠 Build
+        run: yarn build
+
+      - name: 🧪 Run Tests
+        timeout-minutes: 10
+        run: |
+          cp .env.example build/.env
+          docker run --rm -p 5432:5432 -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=cursos_pra_todos -d postgres:12.3 -c fsync=off
+          sleep 10 # db start tolerance time -- todo: improve with a wait step check?
+          yarn coverage
+
+      - name: 👩‍🔬 Upload Tests Reports
+        uses: codecov/codecov-action@v1
+        with:
+          fail_ci_if_error: true
+          directory: nodejs-api
+
+      - name: 🐳 Build and push Docker images
+        uses: docker/build-push-action@v1
+        with:
+          username: codigopratodos
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          repository: codigopratodos/cspt-nodejs-api
+          tag_with_ref: true
+          tag_with_sha: true
+          path: nodejs-api
