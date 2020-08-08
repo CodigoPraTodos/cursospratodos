@@ -60,3 +60,4 @@ jobs:
           repository: codigopratodos/cspt-nodejs-api
           tag_with_ref: true
           tag_with_sha: true
+          path: nodejs-api
