@@ -74,6 +74,8 @@ Se você possuir o aplicativo Insomnia, poderá usar o arquivo [Insomnia.json](I
 
 Siga os passos do `Rodando em desenvolvimento` em um terminal aberto
 
+Crie um banco de dados teste em seu servidor de postgres chamado `cpt_test`.
+
 Abra outro terminal e nele execute o comando:
 
 ```bash
