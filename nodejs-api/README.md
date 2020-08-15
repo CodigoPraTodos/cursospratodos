@@ -28,6 +28,10 @@ yarn
 # Inicia o banco de dados com Docker para executar migrações e seed
 docker-compose up
 
+# Antes de realizar qualquer migração ou seed, você precisa fazer build ou
+# iniciar o modo de desenvolvimento para realizar arquivos de build
+yarn build # ou yarn start
+
 # Rode os scripts de migração para criar o banco de dados local
 # Lembre de ter o banco de dados criado e configurado (.env)
 yarn migrate:run
@@ -69,6 +73,8 @@ Se você possuir o aplicativo Insomnia, poderá usar o arquivo [Insomnia.json](I
 ## Executando testes
 
 Siga os passos do `Rodando em desenvolvimento` em um terminal aberto
+
+Crie um banco de dados teste em seu servidor de postgres chamado `cpt_test`.
 
 Abra outro terminal e nele execute o comando:
 
