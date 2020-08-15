@@ -1,7 +1,7 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import { schema, rules } from '@ioc:Adonis/Core/Validator'
 
-export default class CourseInfoValidator {
+export default class CourseClassValidator {
   constructor (private ctx: HttpContextContract) {
   }
 
@@ -9,11 +9,8 @@ export default class CourseInfoValidator {
     title: schema.string({ trim: true }, [
       rules.maxLength(70),
     ]),
-    shortDescription: schema.string({ }, [
-      rules.maxLength(100),
-    ]),
-    description: schema.string({ }, [
-      rules.maxLength(1000),
+    youtubeId: schema.string({ }, [
+      rules.maxLength(30),
     ]),
   })
 

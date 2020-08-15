@@ -7,7 +7,7 @@ export default class CourseClasses extends BaseSchema {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id').primary()
       table.string('title', 70).notNullable()
-      table.string('youtubeId', 30).notNullable()
+      table.string('youtube_id', 30).notNullable()
       table.string('description', 255).nullable()
       table.integer('order').unsigned().notNullable().comment('Order on classes')
       table.boolean('is_public').defaultTo(false).notNullable() // If the class is ready to be publicly visible

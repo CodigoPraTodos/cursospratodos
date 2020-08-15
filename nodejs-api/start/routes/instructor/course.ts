@@ -9,20 +9,37 @@ Route.group(() => {
     Route.put('/:id', 'Instructor/CoursesController.update')
 
     // Update course thumbnail
-    Route.patch('/thumbnail/:id', 'Instructor/CoursesController.updateThumbnail')
+    Route.patch(
+      '/thumbnail/:id',
+      'Instructor/CoursesController.updateThumbnail'
+    )
 
     // Update course status (Planned, Public, Removed)
-    Route.patch('/status/:id/:status', 'Instructor/CoursesController.updateStatus')
+    Route.patch(
+      '/status/:id/:status',
+      'Instructor/CoursesController.updateStatus'
+    )
   }).prefix('course')
 
   Route.group(() => {
+    // Create course class
+    Route.post('/:courseId', 'Instructor/CourseClassesController.create')
 
+    // Update course class
+    Route.put('/:courseId/:id', 'Instructor/CourseClassesController.update')
+
+    // Toggle active course class
+    Route.patch('/:courseId/:id/active', 'Instructor/CourseClassesController.toggleActive')
+
+    // Reorder course class
+    Route.patch('/:courseId/:id/reorder', 'Instructor/CourseClassesController.reorder')
   }).prefix('course-class')
-  /**
-   * CourseClass
-   * CourseClassExercise
-   * CourseClassExerciseApproval
-   */
+
+  Route.group(() => {
+  }).prefix('course-class-exercise')
+
+  Route.group(() => {
+  }).prefix('course-class-exercise-approval')
 })
   .prefix('instructor')
   .middleware('instructorAuth')
