@@ -2,6 +2,12 @@ import Route from '@ioc:Adonis/Core/Route'
 
 Route.group(() => {
   Route.group(() => {
+    // List all teacher courses
+    Route.get('/', 'Instructor/CoursesController.paginate')
+
+    // Get course detail
+    Route.get('/:id', 'Instructor/CoursesController.get')
+
     // Create course (general information, without thumbnail)
     Route.post('/', 'Instructor/CoursesController.create')
 
@@ -22,6 +28,12 @@ Route.group(() => {
   }).prefix('course')
 
   Route.group(() => {
+    // List all teacher course classes
+    Route.get('/:courseId', 'Instructor/CourseClassesController.paginate')
+
+    // Get course class detail
+    Route.get('/:courseId/:id', 'Instructor/CourseClassesController.get')
+
     // Create course class
     Route.post('/:courseId', 'Instructor/CourseClassesController.create')
 

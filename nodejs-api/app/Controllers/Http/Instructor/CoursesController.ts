@@ -7,6 +7,26 @@ import { CourseStatus } from 'App/Helpers/CourseStatus'
 import CourseInfoValidator from 'App/Validators/CourseInfoValidator'
 
 export default class CoursesController {
+  // Get teacher courses
+  public async paginate({ auth, request }: HttpContextContract) {
+    const { page, limit } = UtilsService.getPageAndLimit(
+      request.only(['page', 'limit'])
+    )
+
+    return await Course.query()
+      .select('id', 'title', 'thumbnail_url', 'created_at')
+      .where('user_id', auth.user!.id)
+      .paginate(page, limit)
+  }
+
+  // Get teacher course details
+  public async get({ auth, params: { id } }: HttpContextContract) {
+    return await Course.query()
+      .where('id', id)
+      .andWhere('user_id', auth.user!.id)
+      .firstOrFail()
+  }
+
   public async create({ auth, request, response }: HttpContextContract) {
     const data = await request.validate(CourseInfoValidator)
 

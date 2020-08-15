@@ -8,6 +8,31 @@ import CourseClassValidator from 'App/Validators/CourseClassValidator'
 import UtilsService from 'App/Services/UtilsService'
 
 export default class CourseClassesController {
+  // Get teacher course classes
+  public async paginate({ auth, request, params: { courseId } }: HttpContextContract) {
+    await this.courseExistAndIsFromUser(courseId, auth.user!)
+
+    const { page, limit } = UtilsService.getPageAndLimit(
+      request.only(['page', 'limit'])
+    )
+
+    return await CourseClass.query()
+      .select('id', 'title', 'order', 'is_public', 'created_at')
+      .where('course_id', courseId)
+      .orderBy('order', 'asc')
+      .paginate(page, limit)
+  }
+
+  // Get teacher course class details
+  public async get({ auth, params: { courseId, id } }: HttpContextContract) {
+    await this.courseExistAndIsFromUser(courseId, auth.user!)
+
+    return await CourseClass.query()
+      .where('id', id)
+      .andWhere('course_id', courseId)
+      .firstOrFail()
+  }
+
   public async create({
     auth,
     request,
@@ -43,8 +68,6 @@ export default class CourseClassesController {
     response,
     params: { courseId, id },
   }: HttpContextContract) {
-    id = parseInt(id, 10)
-    courseId = parseInt(courseId, 10)
     await this.courseExistAndIsFromUser(courseId, auth.user!)
 
     const data = await request.validate(CourseClassValidator)
@@ -85,8 +108,6 @@ export default class CourseClassesController {
     auth,
     params: { courseId, id },
   }: HttpContextContract) {
-    id = parseInt(id, 10)
-    courseId = parseInt(courseId, 10)
     await this.courseExistAndIsFromUser(courseId, auth.user!)
 
     const courseClass = await CourseClass.findOrFail(id)
@@ -102,8 +123,6 @@ export default class CourseClassesController {
     response,
     params: { courseId, id },
   }: HttpContextContract) {
-    id = parseInt(id, 10)
-    courseId = parseInt(courseId, 10)
     await this.courseExistAndIsFromUser(courseId, auth.user!)
 
     const courseClass = await CourseClass.findOrFail(id)
