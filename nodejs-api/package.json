@@ -14,7 +14,7 @@
     "coverage": "nyc yarn test"
   },
   "devDependencies": {
-    "@adonisjs/assembler": "^2.0.0",
+    "@adonisjs/assembler": "^2.1.5",
     "@istanbuljs/nyc-config-typescript": "^1.0.1",
     "@types/faker": "^4.1.12",
     "@types/supertest": "^2.0.10",
@@ -35,11 +35,11 @@
     "youch-terminal": "^1.0.0"
   },
   "dependencies": {
-    "@adonisjs/ace": "^6.0.0",
-    "@adonisjs/auth": "^4.2.4",
-    "@adonisjs/core": "^5.0.0-preview-rc",
-    "@adonisjs/fold": "^6.0.0",
-    "@adonisjs/lucid": "^8.2.2",
+    "@adonisjs/ace": "^6.9.4",
+    "@adonisjs/auth": "^4.3.1",
+    "@adonisjs/core": "^5.0.0-preview-rc-1.11",
+    "@adonisjs/fold": "^6.4.0",
+    "@adonisjs/lucid": "^8.4.1",
     "pg": "^8.3.0",
     "proxy-addr": "^2.0.6",
     "reflect-metadata": "^0.1.13",
