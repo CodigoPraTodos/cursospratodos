@@ -41,6 +41,7 @@
     "@adonisjs/fold": "^6.4.0",
     "@adonisjs/lucid": "^8.4.1",
     "pg": "^8.3.0",
+    "phc-argon2": "^1.0.10",
     "proxy-addr": "^2.0.6",
     "reflect-metadata": "^0.1.13",
     "source-map-support": "^0.5.19",
