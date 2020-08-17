@@ -37,14 +37,21 @@ export default class AuthController {
     return this.responseAuthentication(user, token.toJSON())
   }
 
-  public async renewToken({ auth, response }: HttpContextContract) {
+  public async renewToken({ auth, response, request }: HttpContextContract) {
     if (!auth.user) {
       return response.unauthorized(undefined)
     }
 
+    let { keepOldToken } = request.only(['keepOldToken'])
+    keepOldToken = keepOldToken === 'true'
+
     const { user } = auth // extract user to re-login
     await user.preload('instructor')
-    await auth.use('api').logout() // remove last access token
+
+    // remove last access token
+    if (!keepOldToken) {
+      await auth.use('api').logout()
+    }
 
     const token = await auth.use('api').login(user, {
       expiresIn: EXPIRES_IN,
@@ -54,7 +61,7 @@ export default class AuthController {
 
   public async logout({ auth, response }: HttpContextContract) {
     await auth.use('api').logout()
-    return response.noContent(undefined)
+    return response.noContent()
   }
 
   private responseAuthentication(user: User, tokenJSON: any) {
@@ -75,9 +82,7 @@ const schemaAuth = (isSignUp: boolean = false) => {
 
   if (isSignUp) {
     emailRules.push(rules.unique({ table: 'users', column: 'email' }))
-    authSchema.name = schema.string({ trim: true }, [
-      rules.maxLength(150),
-    ])
+    authSchema.name = schema.string({ trim: true }, [rules.maxLength(150)])
   }
 
   return schema.create(authSchema)

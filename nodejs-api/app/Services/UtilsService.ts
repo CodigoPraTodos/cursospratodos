@@ -14,7 +14,15 @@ export default class UtilsService {
     }
   }
 
-  public static getPageAndLimit({ page, limit }: { page?: any; limit?: any }) {
+  public static getPageAndLimit({
+    page,
+    limit,
+    ...otherProps
+  }): {
+      page: any
+      limit: any
+      [x: string]: any
+    } {
     page = parseInt(page, 10)
     limit = parseInt(limit, 10)
 
@@ -24,6 +32,7 @@ export default class UtilsService {
         !limit || isNaN(limit) || limit > MAXIMUM_PAGE_SIZE
           ? DEFAULT_PAGE_SIZE
           : limit,
+      ...otherProps,
     }
   }
 }

@@ -4,9 +4,13 @@ import { AuthenticationException } from '@adonisjs/auth/build/standalone'
 export default class AuthMiddleware {
   protected async authenticate(
     auth: HttpContextContract['auth'],
-    guards: string[]
+    guards: any[]
   ) {
+    let guardLastAttempted: string | undefined
+
     for (let guard of guards) {
+      guardLastAttempted = guard
+
       if (await auth.use(guard).check()) {
         auth.defaultGuard = guard
         return true
@@ -15,7 +19,8 @@ export default class AuthMiddleware {
 
     throw new AuthenticationException(
       'Unauthorized access',
-      'E_UNAUTHORIZED_ACCESS'
+      'E_UNAUTHORIZED_ACCESS',
+      guardLastAttempted
     )
   }
 

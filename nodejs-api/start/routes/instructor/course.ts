@@ -48,9 +48,31 @@ Route.group(() => {
   }).prefix('course-class')
 
   Route.group(() => {
+    // List all exercises for a course class
+    Route.get('/:classId', 'Instructor/CourseClassExercisesController.paginate')
+
+    // Get exercise detail
+    Route.get('/:classId/:id', 'Instructor/CourseClassExercisesController.get')
+
+    // Create exercise
+    Route.post('/:classId', 'Instructor/CourseClassExercisesController.create')
+
+    // Update exercise
+    Route.put('/:classId/:id', 'Instructor/CourseClassExercisesController.update')
+
+    // Delete exercise
+    Route.delete('/:classId/:id', 'Instructor/CourseClassExercisesController.delete')
   }).prefix('course-class-exercise')
 
   Route.group(() => {
+    // List all responses for a course class exercise
+    Route.get('/:exerciseId', 'Instructor/CourseClassExerciseResponsesController.paginate')
+
+    // Get exercise response detail
+    Route.get('/:exerciseId/:id', 'Instructor/CourseClassExerciseResponsesController.get')
+
+    // Update exercise response status (approved/reproved)
+    Route.patch('/:exerciseId/:id/update-status', 'Instructor/CourseClassExerciseResponsesController.updateStatus')
   }).prefix('course-class-exercise-approval')
 })
   .prefix('instructor')
