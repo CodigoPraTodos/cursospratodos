@@ -10,7 +10,8 @@
     "App": "app",
     "Contracts": "contracts",
     "Config": "config",
-    "Database": "database"
+    "Database": "database",
+    "Test": "test"
   },
   "preloads": ["./start/routes", "./start/kernel"],
   "providers": [

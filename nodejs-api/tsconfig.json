@@ -20,6 +20,9 @@
       ],
       "Database/*": [
         "./database/*"
+      ],
+      "Test/*": [
+        "./test/*"
       ]
     },
     "types": [

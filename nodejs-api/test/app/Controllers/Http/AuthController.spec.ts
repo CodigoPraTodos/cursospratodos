@@ -1,17 +1,17 @@
 import test from 'japa'
 import supertest from 'supertest'
 import faker from 'faker'
-import { createFakeUser } from '../../../utils/user-utils'
-import { BASE_URL } from '../../../constants'
+
 import User from 'App/Models/User'
+import { BASE_URL } from 'Test/constants'
+import { createFakeUser, getLoggedUser } from 'Test/utils/user-utils'
 
 const URL = BASE_URL + '/auth'
 
 test.group('AuthController', () => {
   test.group('/auth', (group) => {
     group.beforeEach(async () => {
-      const users = await User.all()
-      await Promise.all(users.map((user) => user.delete()))
+      await User.query().delete()
     })
 
     test.group('POST /register', () => {
@@ -80,7 +80,10 @@ test.group('AuthController', () => {
             password: 'invalid_password',
           })
           .expect(400)
-        assert.equal(response.body.errors[0].message, 'Invalid user credentials')
+        assert.equal(
+          response.body.errors[0].message,
+          'Invalid user credentials'
+        )
       })
 
       test('lacking data', async (assert) => {
@@ -90,7 +93,10 @@ test.group('AuthController', () => {
             email: 'invalid@email.com',
           })
           .expect(422)
-        assert.equal(response.body.errors[0].message, 'required validation failed')
+        assert.equal(
+          response.body.errors[0].message,
+          'required validation failed'
+        )
         assert.isArray(response.body.errors)
         assert.isNotEmpty(response.body.errors)
       })
@@ -98,36 +104,39 @@ test.group('AuthController', () => {
 
     test.group('GET /logout', async () => {
       test('with valid token', async () => {
-        const user = await createFakeUser()
-
-        const loginResponse = await supertest(URL).post('/login').send({ email: user.email, password: 'secret' })
+        const { auth } = await getLoggedUser()
 
         await supertest(URL)
           .get('/logout')
-          .set({ Authorization: `${loginResponse.body.auth.type} ${loginResponse.body.auth.token}` })
+          .set({
+            Authorization: `${auth.type} ${auth.token}`,
+          })
           .expect(204)
       })
       test('with invalid token', async () => {
-        await supertest(URL).get('/logout').set({ Authorization: 'token' }).expect(401)
+        await supertest(URL)
+          .get('/logout')
+          .set({ Authorization: 'token' })
+          .expect(401)
       })
     })
 
     test.group('GET /renew-token', () => {
       test('with invalid token', async () => {
-        await supertest(URL).get('/renew-token').set({ Authorization: 'token' }).expect(401)
+        await supertest(URL)
+          .get('/renew-token')
+          .set({ Authorization: 'token' })
+          .expect(401)
       })
       test('with valid token', async (assert) => {
-        const user = await createFakeUser()
-
-        const loginResponse = await supertest(URL).post('/login').send({ email: user.email, password: 'secret' })
-
+        const { auth } = await getLoggedUser()
         const response = await supertest(URL)
           .get('/renew-token')
-          .set({ Authorization: `${loginResponse.body.auth.type} ${loginResponse.body.auth.token}` })
+          .set({ Authorization: `${auth.type} ${auth.token}` })
           .expect(200)
 
         assert.isObject(response)
-        assert.notEqual(loginResponse.body.auth.token, response.body.auth.token)
+        assert.notEqual(auth.token, response.body.auth.token)
       })
     })
   })
