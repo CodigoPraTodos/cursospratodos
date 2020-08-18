@@ -3,6 +3,7 @@ import supertest from 'supertest'
 import faker from 'faker'
 
 import User from 'App/Models/User'
+
 import { BASE_URL } from 'Test/constants'
 import { createFakeUser, getLoggedUser } from 'Test/utils/user-utils'
 
@@ -25,7 +26,7 @@ test.group('AuthController', () => {
           })
           .expect(201)
         assert.isDefined(response.body.auth.token)
-        assert.equal(response.body.user.id, 1)
+        assert.notEqual(response.body.user.id, null)
         assert.notExists(response.body.user.password)
       })
 

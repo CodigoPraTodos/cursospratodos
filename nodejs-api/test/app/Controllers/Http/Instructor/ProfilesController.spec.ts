@@ -3,8 +3,9 @@ import supertest from 'supertest'
 import faker from 'faker'
 
 import User from 'App/Models/User'
-import { getLoggedUser } from 'Test/utils/user-utils'
+
 import { BASE_URL } from 'Test/constants'
+import { getLoggedUser } from 'Test/utils/user-utils'
 
 test.group('ProfilesController', () => {
   test.group('/instructor', (group) => {

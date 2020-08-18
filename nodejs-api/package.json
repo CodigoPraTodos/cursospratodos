@@ -6,7 +6,7 @@
     "build": "node ace build",
     "start": "node ace serve --watch",
     "lint": "eslint . --ext=.ts",
-    "seed": "node ace db:seed --files=Role,User,UserRole,Instructor,Course",
+    "seed": "node ace db:seed --files=./database/seeders/Role,./database/seeders/User,./database/seeders/UserRole,./database/seeders/Instructor,./database/seeders/Course",
     "migrate:run": "node ace migration:run",
     "migrate:rollback": "node ace migration:rollback",
     "migrate:full": "yarn migrate:rollback && yarn migrate:run",

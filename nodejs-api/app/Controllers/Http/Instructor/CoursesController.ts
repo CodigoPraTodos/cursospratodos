@@ -68,7 +68,7 @@ export default class CoursesController {
     if (!thumbnail || thumbnail.hasErrors) {
       return response.badRequest(
         thumbnail?.hasErrors
-          ? thumbnail?.errors
+          ? { errors: thumbnail?.errors }
           : UtilsService.formatMessages('Invalid thumbnail')
       )
     }

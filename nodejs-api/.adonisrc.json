@@ -20,7 +20,7 @@
     "@adonisjs/lucid",
     "@adonisjs/auth"
   ],
-  "metaFiles": [".env", ".adonisrc.json", "uploads/**"],
+  "metaFiles": [".env", ".adonisrc.json", "uploads/**", "test/files/**"],
   "directories": {
     "public": "./uploads"
   }
