@@ -8,10 +8,10 @@ export default class CourseClassExerciseResponse extends BaseModel {
   @column()
   public exerciseResponseUrl: string
 
-  @column()
+  @column({ isPrimary: true })
   public userId: number
 
-  @column()
+  @column({ isPrimary: true })
   public courseClassExerciseId: number
 
   /**

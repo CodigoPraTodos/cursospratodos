@@ -1,8 +1,16 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column, belongsTo, BelongsTo } from '@ioc:Adonis/Lucid/Orm'
+import {
+  BaseModel,
+  column,
+  belongsTo,
+  BelongsTo,
+  hasMany,
+  HasMany,
+} from '@ioc:Adonis/Lucid/Orm'
 
 import CourseClass from './CourseClass'
 import Lambda from './Lambda'
+import CourseClassExerciseResponse from './CourseClassExerciseResponse'
 
 export default class CourseClassExercise extends BaseModel {
   @column({ isPrimary: true })
@@ -55,4 +63,7 @@ export default class CourseClassExercise extends BaseModel {
 
   @belongsTo(() => Lambda)
   public lambda: BelongsTo<typeof Lambda>
+
+  @hasMany(() => CourseClassExerciseResponse)
+  public responses: HasMany<typeof CourseClassExerciseResponse>
 }
