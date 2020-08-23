@@ -29,7 +29,7 @@ export default class CourseClassExerciseResponsesController {
       query = query.andWhere('approved', ApproveStatus.WAITING_FOR_REVIEW)
     }
 
-    return await query.orderBy('order', 'asc').paginate(page, limit)
+    return await query.paginate(page, limit)
   }
 
   public async get({ auth, params: { exerciseId, id } }: HttpContextContract) {

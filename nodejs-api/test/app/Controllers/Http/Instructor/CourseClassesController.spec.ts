@@ -127,7 +127,7 @@ test.group('CourseClassesController', () => {
         const { auth } = await getLoggedUser(false)
 
         await supertest(BASE_URL)
-          .get('/instructor/course')
+          .get('/instructor/course-class/1')
           .set({
             Authorization: `${auth.type} ${auth.token}`,
           })

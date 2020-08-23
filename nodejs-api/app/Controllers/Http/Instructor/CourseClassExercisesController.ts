@@ -21,7 +21,6 @@ export default class CourseClassExercisesController {
 
     return await CourseClassExercise.query()
       .where('course_class_id', classId)
-      .orderBy('order', 'asc')
       .paginate(page, limit)
   }
 
