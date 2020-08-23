@@ -69,10 +69,10 @@ Route.group(() => {
     Route.get('/:exerciseId', 'Instructor/CourseClassExerciseResponsesController.paginate')
 
     // Get exercise response detail
-    Route.get('/:exerciseId/:id', 'Instructor/CourseClassExerciseResponsesController.get')
+    Route.get('/:exerciseId/:userId', 'Instructor/CourseClassExerciseResponsesController.get')
 
     // Update exercise response status (approved/reproved)
-    Route.patch('/:exerciseId/:id/update-status', 'Instructor/CourseClassExerciseResponsesController.updateStatus')
+    Route.patch('/:exerciseId/:userId/update-status', 'Instructor/CourseClassExerciseResponsesController.updateStatus')
   }).prefix('course-class-exercise-approval')
 })
   .prefix('instructor')

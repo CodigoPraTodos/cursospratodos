@@ -3,15 +3,16 @@ import Env from '@ioc:Adonis/Core/Env'
 import Application from '@ioc:Adonis/Core/Application'
 import { MultipartFileContract } from '@ioc:Adonis/Core/BodyParser'
 
+import AwsService from './AwsService'
+
 export default class FileService {
   public static async uploadFile(file: MultipartFileContract): Promise<string> {
     if (process.env.NODE_ENV === 'production') {
-      // AWS TODO
-      return ''
+      return await AwsService.uploadFile(file)
     }
 
     const path = Application.makePath('..', 'uploads')
-    const fileName = `${uuid()}.${file.extname}`
+    const fileName = FileService.getFileName(file)
 
     await file.move(path, {
       name: fileName,
@@ -21,5 +22,9 @@ export default class FileService {
     const port = Env.get('PORT') as string
 
     return `http://${host}:${port}/${fileName}`
+  }
+
+  public static getFileName(file: MultipartFileContract): string {
+    return `${uuid()}.${file.extname}`
   }
 }

@@ -21,7 +21,7 @@ export default class CourseClassExerciseResponsesController {
     )
 
     let query = CourseClassExerciseResponse.query().where(
-      'course_class_id',
+      'course_class_exercise_id',
       exerciseId
     )
 
@@ -29,27 +29,27 @@ export default class CourseClassExerciseResponsesController {
       query = query.andWhere('approved', ApproveStatus.WAITING_FOR_REVIEW)
     }
 
-    return await query.orderBy('order', 'asc').paginate(page, limit)
+    return await query.paginate(page, limit)
   }
 
-  public async get({ auth, params: { exerciseId, id } }: HttpContextContract) {
+  public async get({ auth, params: { exerciseId, userId } }: HttpContextContract) {
     await this.exerciseExistAndIsFromUser(exerciseId, auth.user!)
 
     return await CourseClassExerciseResponse.query()
-      .where('id', id)
+      .where('user_id', userId)
       .andWhere('course_class_exercise_id', exerciseId)
       .firstOrFail()
   }
 
   public async updateStatus({
     auth,
-    params: { exerciseId, id },
+    params: { exerciseId, userId },
     request,
   }: HttpContextContract) {
     await this.exerciseExistAndIsFromUser(exerciseId, auth.user!)
 
     const response = await CourseClassExerciseResponse.query()
-      .where('id', id)
+      .where('user_id', userId)
       .andWhere('course_class_exercise_id', exerciseId)
       .firstOrFail()
 

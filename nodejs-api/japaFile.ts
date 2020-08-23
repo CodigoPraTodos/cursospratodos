@@ -35,4 +35,5 @@ configure({
   files: ['build/test/**/*.spec.js'],
   before: [runMigrations, startHttpServer],
   after: [rollbackMigrations],
+  timeout: 10000,
 })

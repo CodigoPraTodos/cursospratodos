@@ -10,7 +10,8 @@
     "App": "app",
     "Contracts": "contracts",
     "Config": "config",
-    "Database": "database"
+    "Database": "database",
+    "Test": "test"
   },
   "preloads": ["./start/routes", "./start/kernel"],
   "providers": [
@@ -19,7 +20,7 @@
     "@adonisjs/lucid",
     "@adonisjs/auth"
   ],
-  "metaFiles": [".env", ".adonisrc.json", "uploads/**"],
+  "metaFiles": [".env", ".adonisrc.json", "uploads/**", "test/files/**"],
   "directories": {
     "public": "./uploads"
   }
