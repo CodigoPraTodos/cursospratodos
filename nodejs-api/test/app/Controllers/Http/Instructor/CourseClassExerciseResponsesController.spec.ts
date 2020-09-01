@@ -1,5 +1,4 @@
 import test from 'japa'
-import faker from 'faker'
 import supertest from 'supertest'
 
 import User from 'App/Models/User'
