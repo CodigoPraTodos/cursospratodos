@@ -19,7 +19,7 @@ export default class CourseClassExerciseResponse extends BaseModel {
    * For Manual based exercises, it's APPROVED if an admin (maybe manager?) approved it
    */
   @column()
-  public approved: ApproveStatus = ApproveStatus.WAITING_FOR_REVIEW
+  public approved: ApproveStatus
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime

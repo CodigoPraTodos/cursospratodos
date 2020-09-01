@@ -23,7 +23,7 @@ export default class User extends BaseModel {
   public password: string
 
   @column()
-  public isActive: boolean = true
+  public isActive: boolean
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime

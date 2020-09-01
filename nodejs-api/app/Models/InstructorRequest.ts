@@ -15,7 +15,7 @@ export default class InstructorRequest extends BaseModel {
   public description: string
 
   @column()
-  public approved: ApproveStatus = ApproveStatus.WAITING_FOR_REVIEW
+  public approved: ApproveStatus
 
   @column()
   public reprovedReason: string

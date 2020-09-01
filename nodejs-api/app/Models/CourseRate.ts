@@ -5,10 +5,10 @@ import Course from './Course'
 import User from './User'
 
 export default class CourseRate extends BaseModel {
-  @column()
+  @column({ isPrimary: true })
   public userId: number
 
-  @column()
+  @column({ isPrimary: true })
   public courseId: number
 
   @column()

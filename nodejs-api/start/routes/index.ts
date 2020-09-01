@@ -3,6 +3,7 @@ import HealthCheck from '@ioc:Adonis/Core/HealthCheck'
 
 // Import other routes
 import './auth'
+import './student'
 import './instructor'
 
 Route.get('health', async ({ response }) => {

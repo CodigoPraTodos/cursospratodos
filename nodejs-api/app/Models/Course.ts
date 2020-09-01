@@ -1,5 +1,14 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column, HasMany, hasMany, belongsTo, BelongsTo } from '@ioc:Adonis/Lucid/Orm'
+import {
+  BaseModel,
+  column,
+  HasMany,
+  hasMany,
+  belongsTo,
+  BelongsTo,
+  manyToMany,
+  ManyToMany,
+} from '@ioc:Adonis/Lucid/Orm'
 
 import { CourseStatus } from 'App/Helpers/CourseStatus'
 
@@ -29,6 +38,11 @@ export default class Course extends BaseModel {
   @column()
   public userId: number
 
+  // Nullable
+  // If null = not enough reviews (10)
+  @column()
+  public lastCalculatedAvg: number
+
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
 
@@ -45,4 +59,9 @@ export default class Course extends BaseModel {
 
   @hasMany(() => CourseRate)
   public rates: HasMany<typeof CourseRate>
+
+  @manyToMany(() => User, {
+    pivotTable: 'course_students',
+  })
+  public students: ManyToMany<typeof User>
 }

@@ -44,6 +44,7 @@ export default class CourseSeeder extends BaseSeeder {
             ? faker.lorem.words(10)
             : undefined,
           order: i + 1,
+          isPublic: true,
           courseId: course.id,
         })
       }
