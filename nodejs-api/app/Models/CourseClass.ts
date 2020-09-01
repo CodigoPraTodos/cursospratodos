@@ -1,8 +1,18 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column, belongsTo, BelongsTo, hasMany, HasMany } from '@ioc:Adonis/Lucid/Orm'
+import {
+  BaseModel,
+  column,
+  belongsTo,
+  BelongsTo,
+  hasMany,
+  HasMany,
+  manyToMany,
+  ManyToMany,
+} from '@ioc:Adonis/Lucid/Orm'
 
 import Course from './Course'
 import CourseClassExercise from './CourseClassExercise'
+import User from './User'
 
 export default class CourseClass extends BaseModel {
   @column({ isPrimary: true })
@@ -21,7 +31,7 @@ export default class CourseClass extends BaseModel {
   public order: number
 
   @column()
-  public isPublic: boolean = false
+  public isPublic: boolean
 
   @column()
   public courseId: number
@@ -39,4 +49,10 @@ export default class CourseClass extends BaseModel {
 
   @hasMany(() => CourseClassExercise)
   public exercises: HasMany<typeof CourseClassExercise>
+
+  @manyToMany(() => User, {
+    pivotTable: 'course_class_watches',
+    pivotColumns: ['created_at'],
+  })
+  public watches: ManyToMany<typeof User>
 }

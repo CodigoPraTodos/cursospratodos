@@ -8,7 +8,8 @@
     "lint": "eslint . --ext=.ts",
     "seed": "node ace db:seed --files=./database/seeders/Role,./database/seeders/User,./database/seeders/UserRole,./database/seeders/Instructor,./database/seeders/Course",
     "migrate:run": "node ace migration:run",
-    "migrate:rollback": "node ace migration:rollback",
+    "migrate:rollback": "node ace migration:rollback --batch 0",
+    "migrate:rollback:last": "node ace migration:rollback",
     "migrate:full": "yarn migrate:rollback && yarn migrate:run",
     "test": "node build/japaFile.js",
     "coverage": "nyc yarn test"

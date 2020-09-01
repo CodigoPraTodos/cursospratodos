@@ -10,4 +10,4 @@ Route.group(() => {
     Route.get('/renew-token', 'AuthController.renewToken')
     Route.get('/logout', 'AuthController.logout')
   }).middleware('auth')
-}).prefix('/auth')
+}).prefix('auth')
