@@ -64,7 +64,7 @@ export default class CourseSeeder extends BaseSeeder {
             : undefined,
         })
       }
-    }youtubeIds
+    }
 
     exercises = await CourseClassExercise.createMany(exercises)
 
