@@ -25,7 +25,9 @@ function App() {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator>{routes}</Stack.Navigator>
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
+        {routes}
+      </Stack.Navigator>
     </NavigationContainer>
   )
 }

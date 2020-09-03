@@ -6,20 +6,22 @@ import { Platform } from 'react-native'
 export const web = {
   HOME: {
     path: '/',
+    title: 'Cursos pra todos',
   },
   LOGIN: {
     path: '/login',
+    title: 'Entrar',
   },
 }
 
 export const mobile = {
   HOME: {
     path: 'Home',
-    options: { title: 'Inicio' },
+    title: 'Cursos pra todos',
   },
   LOGIN: {
     path: 'Login',
-    options: { title: 'Entrar' },
+    title: 'Entrar',
   },
 }
 
