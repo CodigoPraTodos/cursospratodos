@@ -11,6 +11,9 @@ export const COURSES_QUERY = 'courses'
  * @param {number} limit Limit
  */
 export async function getCourses(_key = COURSES_QUERY, page = 1, limit = 10) {
-  const response = await fetch(`${API_URL}/courses?page=${page}&limit=${limit}`, getHeaderOptions())
+  const response = await fetch(
+    `${API_URL}/courses?page=${page}&limit=${limit}`,
+    await getHeaderOptions()
+  )
   return await response.json()
 }

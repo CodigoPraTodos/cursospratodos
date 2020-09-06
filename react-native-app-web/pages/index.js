@@ -1,14 +1,14 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { StyleSheet, View } from 'react-native'
 
-import { usePaginatedQuery } from 'react-query'
+import { usePaginatedQuery, useMutation } from 'react-query'
 import { Card, Title, Paragraph } from 'react-native-paper'
 
 import routes from '../routes'
 import Link from '../components/Link'
 import Layout from '../components/Layout'
-import { getCourses, COURSES_QUERY } from '../api'
 import GlobalProvider from '../context/GlobalContext'
+import { getCourses, COURSES_QUERY, renewToken } from '../api'
 
 function Home({ navigation, initialData }) {
   const [page, setPage] = useState(initialData?.meta?.current_page ?? 1)
@@ -21,6 +21,12 @@ function Home({ navigation, initialData }) {
     latestData,
     isFetching,
   } = usePaginatedQuery([COURSES_QUERY, page], getCourses, { initialData })
+
+  const [renewTokenMutation] = useMutation(renewToken)
+
+  useEffect(() => {
+    renewTokenMutation()
+  }, [renewTokenMutation])
 
   console.log('isLoading', isLoading)
   console.log('isError', isError)
