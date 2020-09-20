@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { View } from 'react-native'
-import { Appbar } from 'react-native-paper'
-import SideMenu from 'react-native-side-menu'
+import { Appbar, Portal } from 'react-native-paper'
 
 import Drawer from './Drawer'
 
@@ -13,7 +12,7 @@ function Layout({ title, subtitle, children }) {
   // TODO: Implement BackAction listening to user route changes (it should work for both mobile and web)
 
   return (
-    <SideMenu menu={<Drawer setOpen={setOpen} />} isOpen={open}>
+    <Portal.Host>
       <Header>
         <Action icon='menu' onPress={() => setOpen(true)} />
         <Content title={title} subtitle={subtitle} />
@@ -21,7 +20,12 @@ function Layout({ title, subtitle, children }) {
       <View style={{ backgroundColor: '#ffffff', padding: 16 }}>
         {children}
       </View>
-    </SideMenu>
+      {open && (
+        <Portal>
+          <Drawer setOpen={setOpen} />
+        </Portal>
+      )}
+    </Portal.Host>
   )
 }
 

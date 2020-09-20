@@ -3,6 +3,7 @@ import AsyncStorage from '@react-native-community/async-storage'
 
 import { API_URL, TOKEN_KEY, USER_KEY } from '../config'
 import { throwIfError } from './utils'
+import { LOGIN, LOGOUT } from '../reducer/actions'
 
 const defaultHeaders = {
   'Content-Type': 'application/json',
@@ -34,7 +35,7 @@ export async function getHeaderOptions() {
  *
  * @param {email, password} auth
  */
-export async function login({ email, password }) {
+export async function login({ email, password, dispatch }) {
   const response = await fetch(`${API_URL}/auth/login`, {
     method: 'POST',
     body: JSON.stringify({ email, password }),
@@ -43,7 +44,7 @@ export async function login({ email, password }) {
 
   const data = await response.json()
   throwIfError(response, data)
-  await saveUserData(data)
+  await saveUserData(data, dispatch)
 
   return data
 }
@@ -53,7 +54,7 @@ export async function login({ email, password }) {
  *
  * @param {name, email, password} auth
  */
-export async function register({ name, email, password }) {
+export async function register({ name, email, password, dispatch }) {
   const response = await fetch(`${API_URL}/auth/register`, {
     method: 'POST',
     body: JSON.stringify({ name, email, password }),
@@ -62,7 +63,7 @@ export async function register({ name, email, password }) {
 
   const data = await response.json()
   throwIfError(response, data)
-  await saveUserData(data)
+  await saveUserData(data, dispatch)
 
   return data
 }
@@ -70,8 +71,9 @@ export async function register({ name, email, password }) {
 /**
  * Renew token from user
  */
-export async function renewToken() {
+export async function renewToken(dispatch) {
   const token = await getAccessToken()
+
   if (!token) return {}
 
   const response = await fetch(
@@ -84,18 +86,25 @@ export async function renewToken() {
   }
 
   const data = await response.json()
-  await saveUserData(data)
+  await saveUserData(data, dispatch)
   return data
 }
 
-async function saveUserData(data) {
+async function saveUserData(data, dispatch) {
+  dispatch({
+    type: LOGIN,
+    payload: { user: data.user, token: data.auth.token },
+  })
+
   await Promise.all([
     AsyncStorage.setItem(TOKEN_KEY, data.auth.token),
     AsyncStorage.setItem(USER_KEY, JSON.stringify(data.user)),
   ])
 }
 
-async function logoutUser() {
+export async function logoutUser(dispatch) {
+  dispatch({ type: LOGOUT })
+
   await Promise.all([
     AsyncStorage.removeItem(TOKEN_KEY),
     AsyncStorage.removeItem(USER_KEY),

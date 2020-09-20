@@ -17,10 +17,10 @@
 ## Serviços (Em progresso)
 
 - 🖥 [nodejs-api](nodejs-api) - API Geral para servir principais serviços da plataforma.
+- 📱 [react-native-app-web](react-native-app-web) - Frontend Web/App mobile para buscar e realizar cursos, áreas de usuário, etc. (Usar React Native Web com Next.js para SSR, e ao mesmo tempo usar pra aplicativo principal)
 
 ## Serviços (Planejados)
 
-- 📱 [react-native-app-web](react-native-app-web) - Frontend Web/App mobile para buscar e realizar cursos, áreas de usuário, etc. (Usar React Native Web com Next.js para SSR, e ao mesmo tempo usar pra aplicativo principal)
 - 👨‍🏫 [react-web-instructor](react-web-instructor) - Frontend Web para CRUDs de cursos, exercícios, relatórios, etc. (podemos usar o mesmo react native web sem SSR)
 - 👨‍🔧 [react-web-admin](react-web-admin) - Frontend Web para administração do sistema, cadastro de instrutores, etc. (podemos usar o mesmo react native web sem SSR)
 - ✍️ [exercises-lambda](exercises-lambda) - Serviços Servless para testes de exercícios realizados durante a aula.
